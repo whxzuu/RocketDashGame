@@ -21,7 +21,8 @@ public class Movement : MonoBehaviour
      {
           if (thrust.IsPressed())
           {
-            rb.AddRelativeForce(0,0,100);
+            Debug.Log("Cek data");
+            //rb.AddRelativeForce(0,0,100);
           }
      }
 }
