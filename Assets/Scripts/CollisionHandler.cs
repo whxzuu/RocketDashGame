@@ -43,14 +43,14 @@ public class CollisionHandler : MonoBehaviour
     void StartSuccessSequence()
     {
         audioSource.PlayOneShot(successEngine);
-        GetComponent<Movement>().enabled = false;
+        //GetComponent<Movement>().enabled = false;
         Invoke("LoadNextLevel", levelLoadDelay);
     }
 
     void StartCrashSequence()
     {
         audioSource.PlayOneShot(crashEngine);
-        GetComponent<Movement>().enabled = false;
+        //GetComponent<Movement>().enabled = false;
         Invoke("ReloadLevel", levelLoadDelay);
     }
 

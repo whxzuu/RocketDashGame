@@ -1,5 +1,5 @@
 <!-- UNITY CODE ASSIST INSTRUCTIONS START -->
-- Project name: Rocket Boost
+- Project name: RocketDashGame
 - Unity version: Unity 6000.0.42f1
 - Active scene:
   - Name: Level_1
@@ -8,7 +8,7 @@
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI
 - Active game object:
-  - Name: Landing Pad
-  - Tag: Finish
+  - Name: Player Rocket
+  - Tag: Player
   - Layer: Default
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
