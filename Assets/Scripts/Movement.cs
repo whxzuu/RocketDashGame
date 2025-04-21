@@ -9,10 +9,12 @@ public class Movement : MonoBehaviour
      [SerializeField] float rotationStrength = 100f;
 
      Rigidbody rb;
+     AudioSource audioSource;
 
      private void Start()
      {
           rb = GetComponent<Rigidbody>();
+          audioSource = GetComponent<AudioSource>();
      }
 
      private void OnEnable()
@@ -33,6 +35,14 @@ public class Movement : MonoBehaviour
           {
                // Debug.Log("Cek data roket terbang/tidak");
                rb.AddRelativeForce(Vector3.up * thrustStrength * Time.fixedDeltaTime);
+               if (!audioSource.isPlaying)
+               {
+                    audioSource.Play();
+               }
+          }
+          else
+          {
+               audioSource.Stop();
           }
      }
 
