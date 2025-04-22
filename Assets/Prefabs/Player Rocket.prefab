@@ -290,6 +290,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e71581d5de846b1439564dc97f6dbc18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  levelLoadDelay: 1.5
+  levelLoadDelayFinish: 1
+  successEngine: {fileID: 8300000, guid: 75681507189d7e74f9e449173799952a, type: 3}
+  crashEngine: {fileID: 8300000, guid: 7959098c34ea3784cb96476253fff6ef, type: 3}
 --- !u!1001 &5352441240720270996
 PrefabInstance:
   m_ObjectHideFlags: 0

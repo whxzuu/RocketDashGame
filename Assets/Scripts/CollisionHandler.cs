@@ -1,11 +1,28 @@
-// using System;
+using System;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
+
+    [SerializeField] float levelLoadDelay = 1.5f;
+    [SerializeField] float levelLoadDelayFinish = 1f;
+    [SerializeField] AudioClip successEngine;
+    [SerializeField] AudioClip crashEngine;
+
+    AudioSource audioSource;
+    bool isControllable = true;
+
+    private void Start()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     private void OnCollisionEnter(Collision other)
     {
+        if (!isControllable)
+        {
+            return;
+        }
         switch (other.gameObject.tag)
         {
             case "Friendly":
@@ -13,103 +30,76 @@ public class CollisionHandler : MonoBehaviour
                 break;
             case "Finish":
                 Debug.Log("Kerja Bagus, akhirnya Sampai !!!");
-                LoadNextLevel();
+                StartSuccessSequence();
                 break;
             case "Fuel":
                 Debug.Log("Ah tidak, sakit sekali !!!");
-                ReloadLevel();
+                StartCrashSequence();
                 break;
             default:
                 Debug.Log("Tidak, kamu kecelakaan");
-                ReloadLevel();
+                StartCrashSequence();
                 break;
-        }
-
-        void ReloadLevel()
-        {
-            int currentScene = SceneManager.GetActiveScene().buildIndex;
-            SceneManager.LoadScene(currentScene);
-        }
-
-        void LoadNextLevel()
-        {
-            int currentScene = SceneManager.GetActiveScene().buildIndex;
-            int nextScene = currentScene + 1;
-            if (nextScene == SceneManager.sceneCountInBuildSettings)
-            {
-                nextScene = 0;
-            }
-            SceneManager.LoadScene(nextScene);
         }
 
     }
 
+    void StartSuccessSequence()
+    {
+        isControllable = false;
+        audioSource.Stop();
+        audioSource.PlayOneShot(successEngine);
+        GetComponent<Movement>().enabled = false;
+        Invoke("LoadNextLevel", levelLoadDelayFinish);
+    }
 
-    //[SerializeField] float levelLoadDelay = 0f;
-    //[SerializeField] AudioClip successEngine;
-    //[SerializeField] AudioClip crashEngine;
+    void StartCrashSequence()
+    {
+        isControllable = false;
+        audioSource.Stop();
+        audioSource.PlayOneShot(crashEngine);
+        GetComponent<Movement>().enabled = false;
+        Invoke("ReloadLevel", levelLoadDelay);
+    }
 
-    //AudioSource audioSource;
+    void ReloadLevel()
+    {
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+        SceneManager.LoadScene(currentScene);
+    }
 
-    //bool isControllable = true;
+    void LoadNextLevel()
+    {
+        int currentScene = SceneManager.GetActiveScene().buildIndex;
+        int nextScene = currentScene + 1;
+        if (nextScene == SceneManager.sceneCountInBuildSettings)
+        {
+            nextScene = 0;
+        }
+        SceneManager.LoadScene(nextScene);
+    }
 
-
-    //private void Start()
-    //{
-    //    audioSource = GetComponent<AudioSource>();
-    //}
-    //private void OnCollisionEnter(Collision other)
-    //{
-    //    if (isControllable)
-    //    {
-    //        return;
-    //    }
-    //    switch (other.gameObject.tag)
-    //    {
-    //        case "Friendly":
-    //           Debug.Log("Semuanya terlihat Baik !!!");
-    //            break;
-    //        case "Finish":
-    //            Debug.Log("Permainan Selesai !!!");
-    //            StartSuccessSequence();
-    //            break;
-    //        default:
-    //            Debug.Log("Anda Kecelakaan !!!");
-    //            StartCrashSequence();
-    //           break;
-    //    }
-
-    //}
-
-    //void StartSuccessSequence()
-    //{
-    //    audioSource.PlayOneShot(successEngine);
-    //GetComponent<Movement>().enabled = false;
-    //    Invoke("LoadNextLevel", levelLoadDelay);
-    //}
-
-    //void StartCrashSequence()
-    //{
-    //    audioSource.PlayOneShot(crashEngine);
-    //GetComponent<Movement>().enabled = false;
-    //    Invoke("ReloadLevel", levelLoadDelay);
-    //}
-
-    //void LoadNextLevel()
-    //{
-    //    int currentScene = SceneManager.GetActiveScene().buildIndex;
-    //    int nextScene = currentScene + 1;
-
-    //    if (nextScene == SceneManager.sceneCountInBuildSettings)
-    //   {
-    //        nextScene = 0;
-    //    }
-    //    SceneManager.LoadScene(nextScene);
-    //}
-
-    //void ReloadLevel()
-    //{
-    //    int currentScene = SceneManager.GetActiveScene().buildIndex;
-    //    SceneManager.LoadScene(currentScene);
-    //}
 }
+
+
+//private void OnCollisionEnter(Collision other)
+//{
+//    if (isControllable)
+//    {
+//        return;
+//    }
+//    switch (other.gameObject.tag)
+//    {
+//        case "Friendly":
+//           Debug.Log("Semuanya terlihat Baik !!!");
+//            break;
+//        case "Finish":
+//            Debug.Log("Permainan Selesai !!!");
+//            StartSuccessSequence();
+//            break;
+//        default:
+//            Debug.Log("Anda Kecelakaan !!!");
+//            StartCrashSequence();
+//           break;
+//    }
+
