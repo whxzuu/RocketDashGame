@@ -7,8 +7,12 @@ public class CollisionHandler : MonoBehaviour
 
     [SerializeField] float levelLoadDelay = 1.5f;
     [SerializeField] float levelLoadDelayFinish = 1f;
-    [SerializeField] AudioClip successEngine;
-    [SerializeField] AudioClip crashEngine;
+    [SerializeField] AudioClip successEngineSFX;
+    [SerializeField] AudioClip crashEngineSFX;
+    [SerializeField] ParticleSystem successParticles;
+    [SerializeField] ParticleSystem crashParticles;
+
+    //ParticleSystem particleSystem;
 
     AudioSource audioSource;
     bool isControllable = true;
@@ -48,7 +52,8 @@ public class CollisionHandler : MonoBehaviour
     {
         isControllable = false;
         audioSource.Stop();
-        audioSource.PlayOneShot(successEngine);
+        audioSource.PlayOneShot(successEngineSFX);
+        successParticles.Play();
         GetComponent<Movement>().enabled = false;
         Invoke("LoadNextLevel", levelLoadDelayFinish);
     }
@@ -57,7 +62,8 @@ public class CollisionHandler : MonoBehaviour
     {
         isControllable = false;
         audioSource.Stop();
-        audioSource.PlayOneShot(crashEngine);
+        audioSource.PlayOneShot(crashEngineSFX);
+        crashParticles.Play();
         GetComponent<Movement>().enabled = false;
         Invoke("ReloadLevel", levelLoadDelay);
     }
@@ -80,26 +86,4 @@ public class CollisionHandler : MonoBehaviour
     }
 
 }
-
-
-//private void OnCollisionEnter(Collision other)
-//{
-//    if (isControllable)
-//    {
-//        return;
-//    }
-//    switch (other.gameObject.tag)
-//    {
-//        case "Friendly":
-//           Debug.Log("Semuanya terlihat Baik !!!");
-//            break;
-//        case "Finish":
-//            Debug.Log("Permainan Selesai !!!");
-//            StartSuccessSequence();
-//            break;
-//        default:
-//            Debug.Log("Anda Kecelakaan !!!");
-//            StartCrashSequence();
-//           break;
-//    }
 
