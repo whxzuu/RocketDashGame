@@ -37,53 +37,83 @@ public class Movement : MonoBehaviour
      {
           if (thrust.IsPressed())
           {
-               // Debug.Log("Cek data roket terbang/tidak");
-               rb.AddRelativeForce(Vector3.up * thrustStrength * Time.fixedDeltaTime);
-               if (!audioSource.isPlaying)
-               {
-                    audioSource.PlayOneShot(mainEngineSFX);
-               }
-               if (!mainEngineParticles.isPlaying)
-               {
-                    mainEngineParticles.Play();
-               }
+               StartThrusting();
           }
           else
           {
-               audioSource.Stop();
-               mainEngineParticles.Stop();
+               StopThrusting();
+          }
+     }
+     private void ProcessRotation()
+     {
+          RotationThrusting();
+
+     }
+
+     private void StartThrusting()
+     {
+          // Debug.Log("Cek data roket terbang/tidak");
+          rb.AddRelativeForce(Vector3.up * thrustStrength * Time.fixedDeltaTime);
+          if (!audioSource.isPlaying)
+          {
+               audioSource.PlayOneShot(mainEngineSFX);
+          }
+          if (!mainEngineParticles.isPlaying)
+          {
+               mainEngineParticles.Play();
           }
      }
 
-     private void ProcessRotation()
+     private void StopThrusting()
+     {
+          audioSource.Stop();
+          mainEngineParticles.Stop();
+     }
+
+     private void RotationThrusting()
      {
           // Debug.Log("Cek data roket rotasi/tidak");
           // Debug.Log("Disini hasil nilai rotasi: " + rotationInput);
           float rotationInput = rotation.ReadValue<float>();
           if (rotationInput < 0)
           {
-               ApplyRotation(rotationStrength);
-               if (!leftTrustParticles.isPlaying)
-               {
-                    rightRhrustParticles.Stop();
-                    leftTrustParticles.Play();
-               }
-               
+               RightRotation();
+
           }
           else if (rotationInput > 0)
           {
-               ApplyRotation(-rotationStrength);
-               if (!rightRhrustParticles.isPlaying)
-               {
-                    leftTrustParticles.Stop();
-                    rightRhrustParticles.Play();
-               }
-          } else
+               LeftRotation();
+          }
+          else
+          {
+               StopRotation();
+          }
+     }
+
+     private void RightRotation()
+     {
+          ApplyRotation(rotationStrength);
+          if (!leftTrustParticles.isPlaying)
+          {
+               rightRhrustParticles.Stop();
+               leftTrustParticles.Play();
+          }
+     }
+
+     private void LeftRotation()
+     {
+          ApplyRotation(-rotationStrength);
+          if (!rightRhrustParticles.isPlaying)
           {
                leftTrustParticles.Stop();
-               rightRhrustParticles.Stop();
+               rightRhrustParticles.Play();
           }
+     }
 
+     private void StopRotation()
+     {
+          leftTrustParticles.Stop();
+          rightRhrustParticles.Stop();
      }
 
      private void ApplyRotation(float rotationThisframe)
