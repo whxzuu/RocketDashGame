@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
@@ -14,14 +15,34 @@ public class CollisionHandler : MonoBehaviour
 
     AudioSource audioSource;
     bool isControllable = true;
+    bool isConllidable = true;
 
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
     }
+
+    private void Update()
+    {
+        RespondToDebugKeys();
+    }
+
+    void RespondToDebugKeys()
+    {
+        if (Keyboard.current.lKey.wasPressedThisFrame) // Tekan "L" keyboard untuk melakukan reload dalam Game
+        {
+            LoadNextLevel();
+        }
+        else if (Keyboard.current.cKey.wasPressedThisFrame) // Tekan "C" keyboard untuk menghilangkan effect (crash) ibaratnya anda ngecit
+        {
+            isConllidable = !isConllidable;
+        }
+    }
+
+
     private void OnCollisionEnter(Collision other)
     {
-        if (!isControllable)
+        if (!isControllable || !isConllidable)
         {
             return;
         }
@@ -84,3 +105,5 @@ public class CollisionHandler : MonoBehaviour
 
 }
 
+
+// Nanti menambahkan asset obstacle lain

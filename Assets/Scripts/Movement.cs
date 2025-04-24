@@ -123,3 +123,5 @@ public class Movement : MonoBehaviour
           rb.freezeRotation = false;
      }
 }
+
+// Nanti menambahkan asset obstacle lain
