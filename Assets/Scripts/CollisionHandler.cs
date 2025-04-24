@@ -12,8 +12,6 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] ParticleSystem successParticles;
     [SerializeField] ParticleSystem crashParticles;
 
-    //ParticleSystem particleSystem;
-
     AudioSource audioSource;
     bool isControllable = true;
 
@@ -45,7 +43,6 @@ public class CollisionHandler : MonoBehaviour
                 StartCrashSequence();
                 break;
         }
-
     }
 
     void StartSuccessSequence()
