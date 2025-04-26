@@ -31,11 +31,13 @@ public class CollisionHandler : MonoBehaviour
     {
         if (Keyboard.current.lKey.wasPressedThisFrame) // Tekan "L" keyboard untuk melakukan reload dalam Game
         {
+            Debug.Log("Skip level is Activated");
             LoadNextLevel();
         }
         else if (Keyboard.current.cKey.wasPressedThisFrame) // Tekan "C" keyboard untuk menghilangkan effect (crash) ibaratnya anda ngecit
         {
             isConllidable = !isConllidable;
+            Debug.Log(isConllidable ? "Cheat Immune is Not Activated" : "Cheat Immune is Activated");
         }
     }
 
