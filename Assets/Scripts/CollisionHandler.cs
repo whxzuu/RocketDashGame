@@ -109,3 +109,6 @@ public class CollisionHandler : MonoBehaviour
 
 
 // Nanti menambahkan asset obstacle lain
+// Add Level Design
+// Optimization Game
+// Testing
